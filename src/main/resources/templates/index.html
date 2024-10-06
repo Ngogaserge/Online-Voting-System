@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Voting App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .hero {
+            background-color: #007bff;
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3rem;
+        }
+        .message {
+            text-align: center;
+            margin: 40px 0;
+            font-size: 1.5rem;
+            color: #6c757d;
+        }
+        .footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Online Voting App</a>
+    <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav mr-auto">
+            <!-- Removed the System Status link -->
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item sec:authorize='isAuthenticated()'">
+                <form th:action="@{/logout}" method="post" style="display:inline;">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> <!-- CSRF token -->
+                    <button type="submit" class="btn btn-link nav-link">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="hero">
+    <h1>Welcome to the Online Voting App!</h1>
+    <p>Your voice matters. Make it count.</p>
+    <a href="/vote" class="btn btn-light btn-lg">Vote Now</a>
+</div>
+
+<div class="container mt-5">
+    <div class="message">
+        <!--
+        <p>We are currently enhancing our system. Stay tuned for updates!</p>
+        <p>Thank you for your patience as we work to improve your voting experience.</p>
+        -->
+        <p>Our system is currently undergoing renovations to improve your experience.</p>
+        <p>We appreciate your understanding and patience as we work to enhance your voting experience.</p>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <span>&copy; 2024 Online Voting App. All Rights Reserved.</span>
+    </div>
+</footer>
+
+</body>
+</html>
