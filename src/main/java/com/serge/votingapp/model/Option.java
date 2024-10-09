@@ -14,6 +14,7 @@ public class Option {
     private Long id;
 
     private String description;
+    private String pi;
 
     @ManyToOne
     @JoinColumn(name = "poll_id")
