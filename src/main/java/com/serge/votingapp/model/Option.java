@@ -14,9 +14,10 @@ public class Option {
     private Long id;
 
     private String description;
-    private String pi;
+    private String party;
+    private String picture;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "poll_id")
     private Poll poll;
 
