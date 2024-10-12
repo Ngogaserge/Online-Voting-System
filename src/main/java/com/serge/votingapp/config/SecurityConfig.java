@@ -29,11 +29,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
                                 "/registration**",
+                                "/login",
                                 "/js/**",
                                 "/css/**",
                                 "/img/**"
-                        ).permitAll()
-                        .anyRequest().authenticated()
+                        ).permitAll()  // Allow access to registration and static resources
+                        .requestMatchers("/admin/**").hasRole("ADMIN")  // Restrict access to admin pages
+                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")  // Allow user pages to both roles
+                        .anyRequest().authenticated()  // All other requests require authentication
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
@@ -52,7 +55,7 @@ public class SecurityConfig {
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setUserDetailsService(userService);
-        auth.setPasswordEncoder(passwordEncoder);  // Now injected from PasswordEncoderConfig
+        auth.setPasswordEncoder(passwordEncoder);
         return auth;
     }
 }
