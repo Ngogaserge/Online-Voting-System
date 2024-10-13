@@ -15,9 +15,12 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <h2 class="text-center mb-4">Create an Account</h2>
-            <form th:action="@{/register}" method="post">
+            <form th:action="@{/registration}" method="post">
                 <div th:if="${param.error}" class="alert alert-danger">
                     <strong>Error!</strong> Invalid registration details.
+                </div>
+                <div th:if="${param.success}" class="alert alert-success">
+                    <strong>Success!</strong> Your registration was successful. You can now log in.
                 </div>
 
                 <div class="form-group">
