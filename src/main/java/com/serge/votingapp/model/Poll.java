@@ -17,6 +17,7 @@ public class Poll {
     private String image;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String status;
 
     @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL)
     private List<Option> options;
