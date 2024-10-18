@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.util.Collection;
+import java.util.List;
 
 
 @Getter
@@ -35,6 +36,10 @@ public class User {
     )
     private Collection<Role> roles;
 
+    @OneToMany(mappedBy = "user")
+    private List<Vote> votes;
+
+
 
     public User(String firstName, String lastName, String email, String password, String provider, Collection<Role> roles) {
         this.firstName = firstName;
@@ -45,4 +50,3 @@ public class User {
         this.roles = roles;
     }
 }
-
