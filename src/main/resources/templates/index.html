@@ -1,84 +1,154 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Voting App</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .hero {
-            background-color: #007bff;
-            color: white;
-            padding: 50px 0;
-            text-align: center;
-        }
-        .hero h1 {
-            font-size: 3rem;
-        }
-        .message {
-            text-align: center;
-            margin: 40px 0;
-            font-size: 1.5rem;
-            color: #6c757d;
-        }
-        .footer {
-            background-color: #343a40;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            position: absolute;
-            width: 100%;
-            bottom: 0;
-        }
-    </style>
+    <title>Online Voting System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Online Voting App</a>
-    <div class="collapse navbar-collapse" id="navbar">
-        <ul class="navbar-nav mr-auto">
-            <!-- Removed the System Status link -->
-        </ul>
-        <ul class="navbar-nav">
-            <li class="nav-item sec:authorize='isAuthenticated()'">
-                <form th:action="@{/logout}" method="post" style="display:inline;">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> <!-- CSRF token -->
-                    <button type="submit" class="btn btn-link nav-link">Logout</button>
-                </form>
-            </li>
-        </ul>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="#">VoteSmart</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/login}">
+                        <i class="fas fa-sign-in-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/registration}">
+                        <i class="fas fa-user-plus"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
 
-<div class="hero">
-    <h1>Welcome to the Online Voting App!</h1>
-    <p>Your voice matters. Make it count.</p>
-    <a href="/vote" class="btn btn-light btn-lg">Vote Now</a>
-</div>
-
-<div class="container mt-5">
-    <div class="message">
-        <!--
-        <p>We are currently enhancing our system. Stay tuned for updates!</p>
-        <p>Thank you for your patience as we work to improve your voting experience.</p>
-        -->
-        <p>Our system is currently undergoing renovations to improve your experience.</p>
-        <p>We appreciate your understanding and patience as we work to enhance your voting experience.</p>
-    </div>
-</div>
-
-<footer class="footer">
+<!-- Hero Section -->
+<section class="hero bg-primary text-white py-5">
     <div class="container">
-        <span>&copy; 2024 Online Voting App. All Rights Reserved.</span>
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h1 class="display-4 fw-bold">Your Vote, Your Future</h1>
+                <p class="lead">A secure and transparent online voting system that empowers you to vote from anywhere, anytime.</p>
+                <a href="#how-it-works" class="btn btn-light btn-lg shadow-sm">Learn More</a>
+            </div>
+            <div class="col-md-6 text-center">
+                <img src="images/Vote! Vote! Vote! — Moonish Goods.png" alt="Online Voting" class="img-fluid" style="max-height: 300px;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-4">
+            <h2 class="fw-bold">Why VoteSmart?</h2>
+            <p class="text-muted">The features that make us the best choice for online voting</p>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Secure & Encrypted</h5>
+                        <p class="card-text">Your vote is protected with state-of-the-art encryption ensuring confidentiality.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Easy to Use</h5>
+                        <p class="card-text">Our platform is user-friendly, making the voting process simple for everyone.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Real-time Results</h5>
+                        <p class="card-text">Access live election results as soon as voting ends.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section id="how-it-works" class="py-5">
+    <div class="container">
+        <div class="row text-center mb-4">
+            <h2 class="fw-bold">How It Works</h2>
+            <p class="text-muted">A simple process for participating in elections</p>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <i class="fas fa-user-plus fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Sign Up</h5>
+                        <p class="card-text">Create your account to begin voting.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <i class="fas fa-id-card fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Verify Identity</h5>
+                        <p class="card-text">Securely verify your identity to cast a valid vote.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <i class="fas fa-check-circle fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Cast Your Vote</h5>
+                        <p class="card-text">Choose your candidates and submit your vote with confidence.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <i class="fas fa-poll fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">View Results</h5>
+                        <p class="card-text">Monitor live election results after voting closes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-4">
+    <div class="container text-center">
+        <p>&copy; 2024 VoteSmart. All rights reserved.</p>
+
     </div>
 </footer>
 
+<!-- Bootstrap JS and Font Awesome JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
