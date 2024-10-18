@@ -1,3 +1,4 @@
+
 package com.serge.votingapp.service;
 
 import com.serge.votingapp.model.Role;
@@ -14,6 +15,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,6 +31,7 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+
     @Override
     public User save(UserRegistrationDto registrationDto) {
         User user = new User(
@@ -37,11 +40,40 @@ public class UserServiceImpl implements UserService {
                 registrationDto.getEmail(),
                 passwordEncoder.encode(registrationDto.getPassword()),  // Encode password
                 registrationDto.getProvider(),
-                Arrays.asList(new Role("ROLE_USER"))  // Setting default role
+                Arrays.asList(new Role("ROLE_ADMIN"))  // Setting default role
         );
 
         return userRepository.save(user);
     }
+
+    @Override
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public void deleteUserById(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void updateUser(Long id, User updatedUser) {
+        User existingUser = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Update the fields you want to allow
+        existingUser.setFirstName(updatedUser.getFirstName());
+        existingUser.setLastName(updatedUser.getLastName());
+        existingUser.setEmail(updatedUser.getEmail());
+
+        // Save the updated user back to the database
+        userRepository.save(existingUser);
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
